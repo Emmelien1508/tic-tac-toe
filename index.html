@@ -6,42 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic Tac Toe</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="script.js"></script>
 </head>
 <body>
     <div class="wrapper">
-        <h1>Welcome to Tic Tac Toe!</h1>
-        <h2 id="result">It is now your turn <span id="whichTurn"></span>!</h2>
-        <div class="grid">
-            <div>
-                <input class="cell" type="text" onclick="addInput(this)"/>
-            </div>
-            <div>
-                <input class="cell" type="text" onclick="addInput(this)"/>
-            </div>
-            <div>
-                <input class="cell" type="text" onclick="addInput(this)"/>
-            </div>
-            <div>
-                <input class="cell" type="text" onclick="addInput(this)"/>
-            </div>
-            <div>
-                <input class="cell" type="text" onclick="addInput(this)"/>
-            </div>
-            <div>
-                <input class="cell" type="text" onclick="addInput(this)"/>
-            </div>            
-            <div>
-                <input class="cell" type="text" onclick="addInput(this)"/>
-            </div>
-            <div>
-                <input class="cell" type="text" onclick="addInput(this)"/>
-            </div>
-            <div>
-                <input class="cell" type="text" onclick="addInput(this)"/>
-            </div>
+        <div class="text">
+            <h2>Welcome to Tic Tac Toe!</h2>
+            <h3 id="currentState">It is now your turn <span id="whichTurn"></span></h3>
+            <h3 id="result"></h3>
         </div>
+        <div id="grid"></div>
+        <button id="reset" onclick="initializeGame()">Reset game</button>
     </div>
 </body>
 </html>

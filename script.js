@@ -1,40 +1,68 @@
 var cells = document.getElementsByClassName("cell");
+var currentPlayer;
 
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("whichTurn").innerText = "X";
-    for (let i=0; i<cells.length; i++) {
-        cells[i].value = "";
-        cells[i].setAttribute("row", Math.floor(i / 3));
-        cells[i].setAttribute("col", i % 3);
-    }
+    initializeBoard();
+    initializeGame();
 });
 
-function addInput(c) {
-    var whichTurn = document.getElementById("whichTurn");
-    c.value = whichTurn.innerText;
-    c.setAttribute("disabled", true);
-    checkCondition();
-    if (whichTurn.innerText == "X") {
-        whichTurn.innerText = "O";
-    } else {
-        whichTurn.innerText = "X";
+function initializeGame() {
+    currentPlayer = "X";
+    document.getElementById("reset").style.display = "none";
+    document.getElementById("result").style.display = "none";
+    document.getElementById("currentState").style.display = "block";
+    document.getElementById("whichTurn").innerText = currentPlayer;
+    for (let i=0; i<cells.length; i++) {
+        cells[i].value = "";
+        cells[i].removeAttribute("disabled");
+        cells[i].style.backgroundColor = "#fff";
     }
 }
 
+function initializeBoard() {
+    let grid = document.getElementById("grid");
+    for (let i=0; i<9; i++) {
+        grid.innerHTML += `<div><input class="cell" type="text" onclick="addInput(this)"/></div>`;
+    }
+}
+
+function disableCells() {
+    for (let i=0; i<9; i++) {
+        cells[i].setAttribute("disabled", true);
+    }
+}
+
+function addInput(c) {
+    c.value = currentPlayer;
+    c.setAttribute("disabled", true);
+    checkCondition();
+    if (currentPlayer == "X") {
+        currentPlayer = "O";
+    } else {
+        currentPlayer = "X";
+    }
+    document.getElementById("whichTurn").innerText = currentPlayer;
+}
+
 function checkCondition() {
-    var whichTurn = document.getElementById("whichTurn");
     if (checkWin()) {
         // disable all cells
-        for (let i=0; i<9; i++) {
-            cells[i].setAttribute("disabled", true);
-        }
+        disableCells();
         // congratulate the winner
-        document.getElementById("result").innerText = `Congratulations on your win ${whichTurn.innerText}!`;
+        setElementDisplay();
+        document.getElementById("result").innerText = `Congratulations on your win ${currentPlayer}!`;
     }
     else if (allCellsOccupied()) {
         // announce stalemate
+        setElementDisplay();
         document.getElementById("result").innerText = `There is no winner :(`;
     }
+}
+
+function setElementDisplay() {
+    document.getElementById("result").style.display = "block";
+    document.getElementById("currentState").style.display = "none";
+    document.getElementById("reset").style.display = "block";
 }
 
 function checkWin() {
@@ -46,18 +74,18 @@ function checkWin() {
         // all three cells traversing the board diagonally are the same
         [0, 4, 8], [2, 4, 6]
     ]
-    console.log(winningConditions)
     for (let i=0; i<winningConditions.length; i++) {
         const winCondition = winningConditions[i];
-        let first = cells[winCondition[0]].value;
-        let second = cells[winCondition[1]].value;
-        let third = cells[winCondition[2]].value;
-        if (first == "" || second == "" || third == "") {
+        let first = cells[winCondition[0]];
+        let second = cells[winCondition[1]];
+        let third = cells[winCondition[2]];
+        if (first.value == "" || second.value == "" || third.value == "") {
             continue;
         }
-        if (first == second && second == third) {
-            console.log("we have a winner!")
-            console.log(winCondition);
+        if (first.value == second.value && second.value == third.value) {
+            first.style.backgroundColor = "#E9DFF4";
+            second.style.backgroundColor = "#E9DFF4";
+            third.style.backgroundColor = "#E9DFF4";
             return true;
         }
     }
@@ -65,15 +93,10 @@ function checkWin() {
 }
 
 function allCellsOccupied() {
-    var fullOccupation = 0;
     for (let i=0; i<cells.length; i++) {
-        if (cells[i].getAttribute("disabled") == "true") {
-            fullOccupation += 1;
+        if (cells[i].getAttribute("disabled") == "false" || cells[i].getAttribute("disabled") == null) {
+            return false;
         }
     }
-    if (fullOccupation == 9) {
-        return true;
-    } else {
-        return false;
-    }
+    return true;
 }

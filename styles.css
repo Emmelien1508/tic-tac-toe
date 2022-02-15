@@ -1,7 +1,7 @@
 :root {
-    --black: #000;
-    --white: #fff;
-    --accent1: blue;
+    --black: #0C2659;
+    --white: #FCECF3;
+    --accent1: #E9DFF4;
 }
 
 *, *::before, *::after {
@@ -11,6 +11,9 @@
 }
 
 body {
+    background-color: var(--white);
+    color: var(--black);
+    font-family: 'Poppins', sans-serif;
     height: 100vh;
     width: 100vw;
 }
@@ -22,11 +25,12 @@ body {
     align-items: center;
 }
 
-.grid {
+#grid {
     display: grid;
     grid-template-columns: repeat(3, auto);
     width: 600px;
     height: 600px;
+    gap: 1px;
 }
 
 input {
@@ -35,15 +39,34 @@ input {
     cursor: pointer;
     text-align: center;
     color: var(--black);
-    font-size: 2rem;
-    font-weight: bold;
-    border: 1px solid var(--accent1);
+    font-size: 79px;
+    font-family: 'Poppins', sans-serif;
+    background-color: #fff;
+    border: 2px solid var(--white);
 }
 
 input:disabled {
     cursor: default;
 }
 
-input:focus {
+input:focus, button:focus {
     outline: none;
+}
+
+button {
+    outline: none;
+    border: none;
+    background-color: var(--accent1);
+    padding: 25px;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 2px;
+    cursor: pointer;
+    margin: 20px;
+    width: 600px;
+}
+
+.text {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
 }
